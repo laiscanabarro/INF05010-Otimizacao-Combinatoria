@@ -15,13 +15,13 @@ tem partes que caracterizam ela como aquela meta-heurística (estas precisam est
     - ii. a sua legibilidade (e.g., organização, nomes, e comentários),
     - iii. a adequação a meta-heurística escolhida (como explicado acima),
     - iv. e a sua performance (especialmente no que tange a escolha de representação da solução e como esta é alterada, a exagerada criação novos objetos de solução ao invés de sua alteração, e o recálculo do valor da função objetivo do a partir zero ao invés de por delta).
-  - (i) A versão do código-fonte entregue deve ser exatamente a mesma utilizada para a escrita do relat´orio preliminar entregue.
-  - (j) O relatório preliminar deve possuir no m´aximo 4 páginas e no mínimo fonte de tamanho 12.
+  - (i) A versão do código-fonte entregue deve ser exatamente a mesma utilizada para a escrita do relatório preliminar entregue.
+  - (j) O relatório preliminar deve possuir no máximo 4 páginas e no mínimo fonte de tamanho 12.
   - (k) O relatório preliminar deve possuir uma descrição clara e completa da implementação:
     - i. Escolha de representação do problema.
-    - ii. Constru¸c˜ao da solução inicial.
+    - ii. Construção da solução inicial.
     - iii. Principais estruturas de dados.
-    - iv. Vizinhan¸ca e a estratégia de escolha de vizinhos (quando aplicável).
+    - iv. Vizinhançaa e a estratégia de escolha de vizinhos (quando aplicável).
     - v. Processo de recombinação e factibilização (quando aplicável).
     - vi. Parâmetros do método (valores usados nos experimentos).
     - vii. Critério de parada (NâO pode ser diretamente tempo).
