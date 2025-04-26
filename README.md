@@ -11,10 +11,10 @@
   - (g) O código deve implementar a meta-heurística escolhida. Cada meta-heurística tem lacunas que variam com o problema e decisõess de implementação que ficam a critério dos alunos, mas também
 tem partes que caracterizam ela como aquela meta-heurística (estas precisam estar presentes no código).
   - (h) São critérios de avaliação da implementação da meta-heurística:
-    - i. a sua corretude (e.g., n˜ao retorna soluções inválidas),
+    - i. a sua corretude (e.g., não retorna soluções inválidas),
     - ii. a sua legibilidade (e.g., organização, nomes, e comentários),
     - iii. a adequação a meta-heurística escolhida (como explicado acima),
-    - iv. e a sua performance (especialmente no que tange a escolha de representação da solução e como esta é alterada, a exagerada criação novos objetos de solução ao invés de sua alteração, e o recálculo do valor da função objetivo do a partir zero ao invés de por delta).
+    - iv. e a sua performance (especialmente no que tange a escolha de representação da solução e como esta é alterada, a exagerada criação novos objetos de solução ao invés de sua alteração, e o recalculo do valor da função objetivo do a partir zero ao invés de por delta).
   - (i) A versão do código-fonte entregue deve ser exatamente a mesma utilizada para a escrita do relatório preliminar entregue.
   - (j) O relatório preliminar deve possuir no máximo 4 páginas e no mínimo fonte de tamanho 12.
   - (k) O relatório preliminar deve possuir uma descrição clara e completa da implementação:
