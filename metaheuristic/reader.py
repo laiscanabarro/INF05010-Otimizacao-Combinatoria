@@ -27,4 +27,4 @@ def read_instance(filepath):
                 synergy[i][j] = row[j]
                 synergy[j][i] = row[j]  
                 
-    return Instance(budget, items, synergy)
+    return Instance(len(items), budget, items, synergy)

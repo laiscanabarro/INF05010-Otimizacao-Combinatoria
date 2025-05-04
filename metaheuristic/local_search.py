@@ -1,4 +1,5 @@
-from utils import evaluate_solution, total_cost
+from instance import Solution
+
 '''
 Local Search Algorithm
 Input:
@@ -7,24 +8,23 @@ Input:
 Output:
     best: A list of indices representing the best solution found.
 '''
-def local_search(solution, instance):
-    best = solution[:]
-    best_value = evaluate_solution(best, instance)
-    n = len(instance.items)
+
+def local_search(solution):
+    best = Solution(solution.instance, solution.solution[:])
+    best_value = best.get_value()
     improved = True
 
     while improved:
         improved = False
-        for i in range(n):
-            if i not in solution:
-                new_solution = solution + [i]
-                if total_cost(new_solution, instance) <= instance.budget:
-                    value = evaluate_solution(new_solution, instance)
+        for i in range(solution.instance.n):
+            if i not in best.solution:
+                new_items = best.solution + [i]
+                new_solution = Solution(best.instance, new_items)
+                if new_solution.get_total_cost() <= best.instance.budget:
+                    value = new_solution.get_value()
                     if value > best_value:
                         best = new_solution
                         best_value = value
                         improved = True
-
-        solution = best[:]
 
     return best
