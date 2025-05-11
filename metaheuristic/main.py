@@ -10,7 +10,7 @@ def main():
     parser.add_argument('-f', '--filepath', type=str, required=True, help='Caminho do arquivo de instâncias')
     parser.add_argument('-m', '--iterations', type=int, required=True, help='Número máximo de iterações')
     parser.add_argument('-s', '--seed', type=int, required=True, help='Semente de aleatoriedade')
-    parser.add_argument('-a', '--alpha', type=float, required=True, help='Parâmetro alpha de aleatoriedad')
+    parser.add_argument('-a', '--alpha', type=float, required=True, help='Parâmetro alpha de aleatoriedade')
     parser.add_argument('-t', '--time', type=int, required=False, help='Tempo máximo de execução')
 
     args = parser.parse_args()
