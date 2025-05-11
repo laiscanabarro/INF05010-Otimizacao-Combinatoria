@@ -11,12 +11,12 @@ A execução requer os seguintes parâmetros:
 
 #### Exemplo 1
 ```bash
-python metaheuristic/main.py --filepath sinergias_instancias/01.txt --iterations 100 --seed 1 --alpha 0.05 --time 300
+python3 metaheuristic/main.py --filepath sinergias_instancias/01.txt --iterations 100 --seed 1 --alpha 0.05 --time 300
 `````
 
 #### Exemplo 2
 ```bash
-python metaheuristic/main.py -f sinergias_instancias/01.txt -m 100 -s 1 -a 0.05 -t 300
+python3 metaheuristic/main.py -f sinergias_instancias/01.txt -m 100 -s 1 -a 0.05 -t 300
 `````
 
 ### Requisitos
