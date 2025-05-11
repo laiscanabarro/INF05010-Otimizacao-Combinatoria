@@ -1,13 +1,5 @@
 from instance import Item, Instance
-'''
-    - a primeira linha do arquivo informa o orçamento (O) e o número de equipamentos (n)
 
-    - a segunda linha até a n+1-ésima linha do arquivo possuem o custo (ci) e o poder (pi) dos n equipamentos correspondentes
-
-    - as linhas n+2 até 2n+1 possuem n valores cada (formam uma matriz quadrada), destes só os valores do triângulo inferior 
-      (onde i > j, sendo i a linha da matriz e j a coluna da matriz) são não zero (isto é, o valor da sinergia para quaisquer
-      equipamentos a e b fica em s[max(a,b), min(a,b)])
-'''
 def read_instance(filepath):
     with open(filepath, 'r') as f:
         lines = [line.strip() for line in f.readlines() if line.strip()]
