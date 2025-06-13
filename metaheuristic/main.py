@@ -8,7 +8,7 @@ def main():
     
     parser = argparse.ArgumentParser(description='GRASP - Problema de Sinergias')
     parser.add_argument('-f', '--filepath', type=str, required=True, help='Caminho do arquivo de instâncias')
-    parser.add_argument('-m', '--iterations', type=int, required=True, help='Número máximo de iterações')
+    parser.add_argument('-i', '--iterations', type=int, required=True, help='Número máximo de iterações')
     parser.add_argument('-s', '--seed', type=int, required=True, help='Semente de aleatoriedade')
     parser.add_argument('-a', '--alpha', type=float, required=True, help='Parâmetro alpha de aleatoriedade')
     parser.add_argument('-t', '--time', type=int, required=False, help='Tempo máximo de execução')
@@ -19,7 +19,7 @@ def main():
     max_iterations = args.iterations
     random_seed = args.seed
     alpha = args.alpha
-    max_time = args.time if args.time is not None else 300
+    max_time = args.time
         
     file_name = os.path.basename(file_path)
     instance = read_instance(file_path)

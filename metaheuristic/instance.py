@@ -1,4 +1,4 @@
-import itertools
+from utils import compute_values
 
 class Item:
     def __init__(self, id, cost, power):
@@ -22,20 +22,28 @@ class Solution:
     def __init__(self, instance, solution):
         self.instance = instance
         self.solution = solution
-        self.total_cost = self.get_total_cost()
-        self.total_power = self.get_total_power()
-        self.total_synergy = self.get_total_synergy()
-        self.value = self.get_value()
+        self._total_cost = None
+        self._total_power = None
+        self._total_synergy = None
+        self._value = None
+        self._compute_values()
+
+    def _compute_values(self):
+        self._total_cost, self._total_power, self._total_synergy, self._value = compute_values(self.instance, self.solution)
+
+    @property
+    def total_cost(self):
+        return self._total_cost
+
+    @property
+    def total_power(self):
+        return self._total_power
     
-    def get_total_cost(self):
-        return sum(self.instance.items[i].cost for i in self.solution)
-        
-    def get_total_power(self):
-        return sum(self.instance.items[i].power for i in self.solution)
-    
-    def get_total_synergy(self):
-        return sum(self.instance.get_synergy(i, j) for i, j in itertools.combinations(self.solution, 2))
-    
-    def get_value(self):
-        return self.get_total_power() + self.get_total_synergy()
+    @property
+    def total_synergy(self):
+        return self._total_synergy
+
+    @property
+    def value(self):
+        return self._value
     
