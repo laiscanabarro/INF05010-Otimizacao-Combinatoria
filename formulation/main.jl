@@ -1,5 +1,7 @@
 using JuMP
 using HiGHS
+using Random
+using Dates
 
 function read_instance(filepath)
     open(filepath, "r") do io
@@ -31,43 +33,72 @@ end
 function create_model(O, n, c, p, s)
     model = Model(HiGHS.Optimizer)
     @variable(model, x[1:n], Bin)
-    @variable(model, y[1:n,1:n], Bin)
+    @variable(model, y[i=1:n, j=1:n], Bin) 
     
     @constraint(model, sum(c[i]*x[i] for i in 1:n) <= O)
     
-    for i in 1:n, j in 1:n
-        if i < j
+    for i in 1:n
+        for j in (i+1):n
             @constraint(model, y[i,j] <= x[i])
-            @constraint(model, y[i,j] <= x[j])
-            @constraint(model, y[i,j] >= x[i] + x[j] - 1)
-        else
-            @constraint(model, y[i,j] == 0)
+            @constraint(model, y[i,j] <= x[j]) 
+            @constraint(model, y[i,j] >= x[i] + x[j] - 1) 
         end
     end
     
     @objective(model, Max,
         sum(p[i] * x[i] for i in 1:n) +
-        sum(s[i,j] * y[i,j] for i in 1:n for j in 1:n if i < j)
+        sum(s[i,j] * y[i,j] for i in 1:n-1 for j in i+1:n)
     )
     
-    optimize!(model)
-    if termination_status(model) == MOI.OPTIMAL
-        equipamentos = [i for i in 1:n if value(x[i]) > 0.5]
-        return round(objective_value(model)), equipamentos
-    else
-        return nothing, []
-    end
+    return model, x
 end
 
 function main()
-    # Testando aqui o modelo com uma instância de exemplo   
-    instancia = "sinergias_instancias/02.txt"
+    if length(ARGS) != 3
+        println("Uso: julia main.jl <file_path> <time> <seed>")
+        return
+    end
 
-    O, n, c, p, s = read_instance(instancia)
-    valor_otimo, equipamentos = create_model(O, n, c, p, s)
+    file_path = ARGS[1]
+    time = parse(Int, ARGS[2])
+    seed = parse(Int, ARGS[3])
 
-    println("Valor ótimo: ", valor_otimo)
-    println("Equipamentos selecionados: ", equipamentos)
+    Random.seed!(seed)
+    O, n, c, p, s = read_instance(file_path)
+
+    model, x = create_model(O, n, c, p, s)
+    set_time_limit_sec(model, time)
+    set_attribute(model, "random_seed", seed)
+
+    initial_time = now()
+    optimize!(model)
+    final_time = now()
+
+    execution_time = (Dates.value(final_time) - Dates.value(initial_time)) / 1000.0
+
+    status = JuMP.termination_status(model)
+
+    println("Arquivo de entrada: $file_path")
+    println("Tempo limite (segundos): $time")
+    println("Semente de aleatoriedade: $seed")
+    println("Orçamento: $O")
+    println("Número de items: $n \n")
+    
+    if status == MOI.OPTIMAL || (status == MOI.TIME_LIMIT && JuMP.primal_status(model) == MOI.FEASIBLE_POINT)
+        value = objective_value(model)
+        items = [i for i in 1:n if JuMP.value.(x[i]) > 0.5]
+
+        println("Melhor solucão encontrada: $value")
+        println("Equipamentos selecionados: $items")
+
+        if status == MOI.TIME_LIMIT
+            upper_bound = JuMP.objective_bound(model)
+            println("Limite superior alcançado: $upper_bound")
+        end
+        println("Tempo médio de execução da formulação: $execution_time")
+    else
+        println("Nenhuma solucão factível encontrada no tempo limite") 
+    end
 end
 
 main()
