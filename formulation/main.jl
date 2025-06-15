@@ -33,7 +33,7 @@ end
 function create_model(O, n, c, p, s)
     model = Model(HiGHS.Optimizer)
     @variable(model, x[1:n], Bin)
-    @variable(model, y[i=1:n, j=1:n], Bin) 
+    @variable(model, y[i=1:n, j=i+1:n], Bin) 
     
     @constraint(model, sum(c[i]*x[i] for i in 1:n) <= O)
     
@@ -44,6 +44,8 @@ function create_model(O, n, c, p, s)
             @constraint(model, y[i,j] >= x[i] + x[j] - 1) 
         end
     end
+
+    @constraint(model, zero_power_synergy[i=1:n, j=i+1:n; (p[i] == 0) && (s[i,j] == 0)], x[i] == 0)
     
     @objective(model, Max,
         sum(p[i] * x[i] for i in 1:n) +
@@ -78,17 +80,19 @@ function main()
 
     status = JuMP.termination_status(model)
 
-    println("Arquivo de entrada: $file_path")
+    println("\nArquivo de entrada: $file_path")
     println("Tempo limite (segundos): $time")
     println("Semente de aleatoriedade: $seed")
     println("Orçamento: $O")
     println("Número de items: $n \n")
     
     if status == MOI.OPTIMAL || (status == MOI.TIME_LIMIT && JuMP.primal_status(model) == MOI.FEASIBLE_POINT)
-        value = objective_value(model)
+        value = round(objective_value(model))
         items = [i for i in 1:n if JuMP.value.(x[i]) > 0.5]
+        custo = round(sum(c[i] * JuMP.value(x[i]) for i in 1:n))
 
         println("Melhor solucão encontrada: $value")
+        printl("Custo total: $custo")
         println("Equipamentos selecionados: $items")
 
         if status == MOI.TIME_LIMIT
