@@ -33,14 +33,13 @@ end
 function create_model(O, n, c, p, s)
     model = Model(HiGHS.Optimizer)
     @variable(model, x[1:n], Bin)
-    @variable(model, y[i=1:n, j=i+1:n], Bin) 
+    @variable(model, y[1:n, 1:n], Bin) 
     
     @constraint(model, sum(c[i]*x[i] for i in 1:n) <= O)
     
     for i in 1:n
         for j in (i+1):n
-            @constraint(model, y[i,j] <= x[i])
-            @constraint(model, y[i,j] <= x[j]) 
+            @constraint(model, y[i,j] <= (x[i] + x[j]) / 2)
             @constraint(model, y[i,j] >= x[i] + x[j] - 1) 
         end
     end
