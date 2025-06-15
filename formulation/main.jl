@@ -92,7 +92,7 @@ function main()
         custo = round(sum(c[i] * JuMP.value(x[i]) for i in 1:n))
 
         println("Melhor solucão encontrada: $value")
-        printl("Custo total: $custo")
+        println("Custo total: $custo")
         println("Equipamentos selecionados: $items")
 
         if status == MOI.TIME_LIMIT
