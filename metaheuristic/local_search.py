@@ -35,8 +35,10 @@ def local_search(instance, solution, max_iterations, alpha):
                 if new_cost <= instance.budget:
                     new_power = total_power - item_out.power + item_in.power
 
-                    synergy_loss = synergy_matrix[i, best].sum() - synergy_matrix[i, i]
-                    synergy_gain = synergy_matrix[j, best].sum() - synergy_matrix[j, i]
+                    best_without_i = [x for x in best if x != i]
+                    synergy_loss = synergy_matrix[i, best_without_i].sum()
+                    synergy_gain = synergy_matrix[j, best_without_i].sum()
+                    
                     new_synergy = total_synergy - synergy_loss + synergy_gain
 
                     new_value = new_power + new_synergy

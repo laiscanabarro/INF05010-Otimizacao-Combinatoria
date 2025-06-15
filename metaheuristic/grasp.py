@@ -20,6 +20,7 @@ def grasp(instance, max_iterations, random_seed, alpha, max_time, start_time):
             print(f"\nTempo máximo atingido em {i} iterações")
             break
         elif max_iterations is not None and i > max_iterations:
+            print(f"\nMelhor resultado atingido em {i} iterações")
             break
 
         solution = random_greedy(instance, alpha)
