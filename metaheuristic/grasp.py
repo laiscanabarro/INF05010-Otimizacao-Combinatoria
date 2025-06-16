@@ -16,9 +16,10 @@ def grasp(instance, max_iterations, random_seed, alpha, max_time, start_time):
     i = 2
     while True:
         elapsed_time = time.time() - start_time
-        if max_time is not None and elapsed_time >= max_time:
-            print(f"\nTempo máximo atingido em {i} iterações")
-            break
+        if max_time is not None:
+            if elapsed_time >= max_time:
+                print(f"\n  Tempo máximo ({max_time:.2f}s) atingido em {i - 1} iterações")
+                break
         elif max_iterations is not None and i > max_iterations:
             break
 
