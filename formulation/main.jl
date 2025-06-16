@@ -43,6 +43,8 @@ function create_model(O, n, c, p, s)
             @constraint(model, y[i,j] >= x[i] + x[j] - 1) 
         end
     end
+
+    @constraint(model, zero_power_synergy[i=1:n, j=i+1:n; (p[i] == 0) && (s[i,j] == 0)], x[i] == 0)
     
     @objective(model, Max,
         sum(p[i] * x[i] for i in 1:n) +
